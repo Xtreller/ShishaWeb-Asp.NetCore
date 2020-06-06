@@ -1,0 +1,6 @@
+﻿# Ignore file named "ReadMe.txt"
+ReadMe.txt
+#Ignore folder bin
+/bin
+#Ignore folder obj
+/obj

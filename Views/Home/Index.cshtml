@@ -1,0 +1,20 @@
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+    <div class="welcome-div" style="text-align:center">
+        @if (SignInManager.IsSignedIn(User))
+        {
+            <h2 class="display-4">Welcome , @UserManager.GetUserName(User)</h2>
+            <ul>
+                @*<li><a href="">content</a></li>*@
+            </ul>
+        }
+        <h3>Here you can find the best Shisha Bars,Reserve place, read people's review and other cool stuff...</h3>
+
+    </div>

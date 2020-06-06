@@ -1,0 +1,21 @@
+﻿body, nav, header {
+    background-color: black;
+    color: wheat;
+}
+
+nav:hover {
+    color:wheat;
+}
+
+footer {
+    margin: 0;
+    padding: 0;
+    position: fixed;
+    bottom: 0;
+}
+
+.welcome-div {
+    position: relative;
+    text-align: center;
+    margin-top: 20%;
+}

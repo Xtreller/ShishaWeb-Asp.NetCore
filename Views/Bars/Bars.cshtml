@@ -1,0 +1,27 @@
+﻿@model Asp.net_Core_Project.ViewModels.BarsViewModel
+@{
+    ViewData["Title"] = "Bars";
+}
+
+
+<p id="addBarBtn">
+    <a asp-action="Add" type="button" class="btn btn-info">Add Bar</a>
+</p>
+
+<div class="d-flex flex-column align-items-center" style="padding-top:1rem;">
+    @foreach (var bar in Model.Bars)
+    {
+    <a asp-controller="Bars" asp-action="Details" asp-route-id="@bar.Id">
+        <div class="card bg-dark text-center" style="width:50rem;">
+            <img  src="@bar.ImageUrl" class="card-img-top" style="height:280px; padding:0.5rem;">
+            <div class="card-body">
+                <h5 class="card-title text-center">@bar.Name</h5>
+                <p class="card-text text-center">@bar.Address - @bar.Town</p>
+                @*<a href="" class="btn btn-primary">Reserve Place/s</a>*@
+                @*<i onclick="Like(this)" class="fa fa-thumbs-up">$</i>*@
+            </div>
+        </div>
+    </a>
+    <br>
+    }
+</div>
