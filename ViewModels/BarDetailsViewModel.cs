@@ -8,7 +8,7 @@ namespace Asp.net_Core_Project.ViewModels
 {
     public class BarDetailsViewModel
     {
-        public int BarId { get; set; }
+        public int Id { get; set; }
         public string Name { get; set; }
         public string ImageUrl { get; set; }
         public string Address { get; set; }

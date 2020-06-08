@@ -8,6 +8,7 @@ using Asp.net_Core_Project.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using ShishaWeb.ViewModels;
 using Microsoft.EntityFrameworkCore;
+using System;
 
 namespace Asp.net_Core_Project.Controllers
 {
@@ -52,20 +53,32 @@ namespace Asp.net_Core_Project.Controllers
         {
            
             var barDetails = await this.barsService.GetByIdAsync(Id);
+           
           
             if (barDetails == null)
             {
                 return this.NotFound();
             }
+            TempData["barId"] = barDetails.Id;
+            
+
             return this.View(barDetails);
         }
 
         
         [HttpPost]
-        public async Task<IActionResult> ReservePlaces(ReservePlacesInputModel input,int BarId)
-        {            
+        public async Task<IActionResult> ReservePlaces(ReservePlacesInputModel input)
+        {
+            var BarId = (int)TempData["barId"];
             await this.barsService.ReservePlaces(BarId, input.FirstName, input.LastName, input.PhoneNumber, input.ClientsCount, input.ForWhen);
-            return await this.Details(BarId);
+            return RedirectToAction("Bars");
         }
+
+        //[HttpPost]
+        //public IActionResult Delete(int? Id,string OwnerId)
+        //{
+        //    if()
+            
+        //}
     }
 }

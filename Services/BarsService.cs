@@ -42,10 +42,11 @@ namespace Asp.net_Core_Project.Services
             }
 
             var bar = await this.dbContext.Bars.FirstOrDefaultAsync(b => b.Id == Id);
-           
-            
+
+
             var barDetails = new BarDetailsViewModel
             {
+                Id = bar.Id,
                 Name = bar.Name,
                 ImageUrl = bar.ImageUrl,
                 Address = bar.Address,
@@ -58,9 +59,9 @@ namespace Asp.net_Core_Project.Services
             };
             return  barDetails;
         }    
-        public async Task<Reservation> ReservePlaces(int id, string firstName, string lastName, int phoneNumber, int clientsCount, DateTime ForWhen)
+        public async Task<Reservation> ReservePlaces(int Id, string firstName, string lastName, int phoneNumber, int clientsCount, DateTime ForWhen)
         {
-            var bar =  await this.dbContext.Bars.Where(b => b.Id == id).FirstOrDefaultAsync();
+            var bar =  await this.dbContext.Bars.Where(b => b.Id == Id).FirstOrDefaultAsync();
             if (bar==null)
             {
                 throw new Exception($"{bar.Id}");
