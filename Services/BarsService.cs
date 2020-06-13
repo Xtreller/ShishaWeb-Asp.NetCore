@@ -38,10 +38,10 @@ namespace Asp.net_Core_Project.Services
         {
             if (Id == null)
             {
-                throw new System.Exception("Id is null");
+                throw new Exception("Id is null");
             }
 
-            var bar = await this.dbContext.Bars.FirstOrDefaultAsync(b => b.Id == Id);
+            var bar = await this.dbContext.Bars.Where(b => b.Id == Id).FirstOrDefaultAsync();
 
 
             var barDetails = new BarDetailsViewModel
@@ -57,16 +57,29 @@ namespace Asp.net_Core_Project.Services
                 Likes = bar.Likes,
                 Dislikes = bar.Dislikes,
             };
-            return  barDetails;
-        }    
+            return barDetails;
+        }
+
+        public async void RemoveBar(int? Id)
+        {
+            var bar = this.dbContext.Bars.Where(b => b.Id == Id).FirstOrDefault();
+            if (bar==null)
+            {
+                throw new Exception("Bar not Found!");
+            }
+            
+            this.dbContext.Bars.Remove(bar);
+            await this.dbContext.SaveChangesAsync();
+        }
+
         public async Task<Reservation> ReservePlaces(int Id, string firstName, string lastName, int phoneNumber, int clientsCount, DateTime ForWhen)
         {
-            var bar =  await this.dbContext.Bars.Where(b => b.Id == Id).FirstOrDefaultAsync();
-            if (bar==null)
+            var bar = await this.dbContext.Bars.Where(b => b.Id == Id).FirstOrDefaultAsync();
+            if (bar == null)
             {
                 throw new Exception($"{bar.Id}");
             }
-          
+
             var reservation = new Reservation
             {
                 BarId = bar.Id,
@@ -85,6 +98,6 @@ namespace Asp.net_Core_Project.Services
 
         }
 
-        
+
     }
 }

@@ -1,17 +1,20 @@
-﻿body, nav, header {
+﻿body,nav, header {
     background-color: black;
     color: wheat;
 }
 
-nav:hover {
-    color:wheat;
+footer {
+    position: fixed; 
+    bottom:0;
+    width: 100%;
+    text-align:center;  
+    border-top:1px solid white;
+    overflow:hidden;
+    background-color:black;
 }
 
-footer {
-    margin: 0;
-    padding: 0;
-    position: fixed;
-    bottom: 0;
+nav:hover {
+    color: wheat;
 }
 
 .welcome-div {
@@ -19,6 +22,5 @@ footer {
     text-align: center;
     margin-top: 20%;
 }
-#dateinput {
-    color:wheat;
-}
+
+

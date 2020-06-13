@@ -5,24 +5,23 @@
 
 
 
+
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = @Model.Name;
 }
 
 
-<div class="details-content align-content-center" >
+<div class="details-content d-block" style="margin:auto;padding:1rem;" id="@Model.Id">
 
-    <img src="@Model.ImageUrl" class="card-img-details" style="height:280px;" >
-    <br>
-    <div style="margin-top:5rem">
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#ReservePlacesModal">Reserve Place in @Model.Name</button>
-        <button type="button" asp-action="Bars" class="btn btn-primary">Back to list!</button>
-       @*Reservation Modal*@
+    <img src="@Model.ImageUrl" class="card-img-details d-flex justify-content-center" style="height:500px;width:960px;margin:auto;">
+
+    <div style="margin:auto;padding:2rem;">
+        @*Reservation Modal*@
         <div class="modal" tabindex="-1" role="dialog" id="ReservePlacesModal">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title">Reserve Place in @Model.Name</h5>
+                        <h5 class="modal-title">Reserve Place/s in @Model.Name</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -36,11 +35,22 @@
             </div>
         </div>
 
-        @if (this.UserManager.GetUserId(this.User) == Model.OwnerId)
-        {
-            <button type="button" asp-action="Delete" class="btn btn-primary">Delete</button>
-            <button type="button" asp-action="Edit" class="btn btn-primary">Edit</button>
-        }
-
+        <div class="d-flex justify-content-center">
+            @if (this.UserManager.GetUserId(this.User) == Model.OwnerId)
+            {
+                <button type="button" asp-action="Edit" class="btn btn-primary">Edit</button>
+                <br >
+                <form method="post" asp-action="Delete" asp-controller="Bars" asp-route-id="@Model.Id" style="margin-left:1rem;margin-right:1rem;">
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </form>
+                <br>
+            }
+            else
+            {
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#ReservePlacesModal">
+                    Reserve Place/s in @Model.Name
+                </button>
+            }
+        </div>
     </div>
 </div>

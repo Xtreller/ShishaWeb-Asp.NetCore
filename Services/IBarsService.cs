@@ -12,5 +12,6 @@ namespace Asp.net_Core_Project.Services
         Task<Bar> Create(string userId,string name, string town, string address, string ImageUrl);
         Task<Reservation> ReservePlaces(int barId, string firstName ,string lastName ,int phoneNumber, int clientsCount,DateTime reservedFor);
         Task<BarDetailsViewModel> GetByIdAsync(int? id);
+        void RemoveBar(int? Id);
     }
 }

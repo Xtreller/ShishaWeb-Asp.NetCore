@@ -29,7 +29,7 @@ namespace Asp.net_Core_Project.Controllers
         [Authorize]
         public IActionResult Bars()
         {
-            var bars = this.db.Bars.ToList();
+            var bars = this.db.Bars.ToList().OrderByDescending(b=>b.CreatedOn);
             var barModel = new BarsViewModel
             {
                 Bars = bars
@@ -45,28 +45,29 @@ namespace Asp.net_Core_Project.Controllers
         [Authorize]
         public async Task<IActionResult> Add(AddBarInputModel input)
         {
-            var user = await this.userManager.GetUserAsync(this.User);          
-            await this.barsService.Create(user.Id,input.Name,input.Town, input.Address, input.ImageURL);           
+            var user = await this.userManager.GetUserAsync(this.User);
+            await this.barsService.Create(user.Id, input.Name, input.Town, input.Address, input.ImageURL);
             return RedirectToAction("Bars");
         }
         public async Task<IActionResult> Details(int? Id)
         {
-           
+
             var barDetails = await this.barsService.GetByIdAsync(Id);
-           
-          
+
+
             if (barDetails == null)
             {
                 return this.NotFound();
             }
             TempData["barId"] = barDetails.Id;
-            
+
 
             return this.View(barDetails);
         }
 
-        
+
         [HttpPost]
+
         public async Task<IActionResult> ReservePlaces(ReservePlacesInputModel input)
         {
             var BarId = (int)TempData["barId"];
@@ -74,11 +75,23 @@ namespace Asp.net_Core_Project.Controllers
             return RedirectToAction("Bars");
         }
 
-        //[HttpPost]
-        //public IActionResult Delete(int? Id,string OwnerId)
-        //{
-        //    if()
-            
-        //}
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        [Authorize]
+        public async Task<IActionResult> Delete(int? Id)
+        {
+            var bar = await this.db.Bars.Where(b => b.Id == Id).FirstOrDefaultAsync();
+            if (bar == null)
+            {
+                throw new Exception("Bar not found!");
+            }
+            if (userManager.GetUserId(User) == bar.UserId)
+            {
+                this.db.Bars.Remove(bar);
+                await this.db.SaveChangesAsync();
+            }
+           return this.RedirectToAction("Bars");
+
+        }
     }
 }
